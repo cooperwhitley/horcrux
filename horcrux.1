@@ -1,0 +1,59 @@
+.\"
+.\" Copyright (c) 2020 Jesse Duffield
+.\"
+.\" @(#)horcrux.1
+.\"
+.TH horcrux 1
+.Dd man authored 27th July 2023 for horcrux version 0.2
+.Dt horcrux 1
+
+.Sh NAME
+.Nm horcrux
+.Nd Split your file into encrypted horcruxes so that you don't need to remember a passcode
+.Sh SYNOPSIS
+.Nm
+.B   (options)
+.Ar <Operation>
+[target]
+.Sh DESCRIPTION
+.Nm
+is a file encryption tool using the Shamir Secret Sharing Scheme (Adapted from Hashicorp's
+implementation from their vault repo).to break an encryption key into parts that can be
+recombined to create the original key, but only requiring a certain threshold to do so. Unique to
+.Nm
+is the fact that the file is fragmented as a part of the distributed keys, so all that is needed to restore the original file are enough horcruxes to bind.
+.TP
+.Ar Operations
+.Bl -tag -width -indent
+.It Ar split
+Splits given file into encrypted horcruxes, when passed without flags it prompts for how many horcruxes will be created
+and how many will be required to recreate the original file
+.It Ar bind
+Binds horcruxes in the passed directory back into the original file if the quantity of them passes the threshold
+.El
+.TP
+.Ar Options
+.Bl -tag -width -indent
+.It -n <number of horcruxes>
+Chooses how many horcruxes to split the original file into
+.It -t <resurrection threshold>
+Chooses required amount of horcruxes to resurrect original file
+.El
+.TP
+.Ar Target
+.Bl -tag -width -indent
+.It For split
+Choose file to split
+.It For bind
+Choose directory to resurrect from
+.El
+.Pp
+
+.Sh BUGS
+.Bl -tag -width -indent
+.It -Does not automatically pass the current directory for bind if no argument for target is passed as stated in README.md
+.It -Command syntax does not match flowchart in README.md
+.El
+
+.Sh AUTHOR
+Jesse Duffield (jessedduffield@gmail.com)
